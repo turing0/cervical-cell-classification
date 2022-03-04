@@ -1,0 +1,94 @@
+/*--------------------------------------------------------------
+# Top Bar
+--------------------------------------------------------------*/
+//#topbar {
+//  height: 60px;
+//  padding: 0;
+//  font-size: 14px;
+//  transition: all 0.5s;
+//  overflow: hidden;
+//  color: rgba(#fff, .8);
+//  z-index: 996;
+//  &.topbar-scrolled {
+//    top: -60px;
+//  }
+//
+//  .contact-info {
+//    a {
+//      line-height: 0;
+//      color: rgba(#fff, .8);
+//      transition: 0.3s;
+//      &:hover {
+//        text-decoration: underline;
+//      }
+//    }
+//
+//    i {
+//      color: $secondary;
+//      line-height: 0;
+//      margin-right: 5px;
+//    }
+//    .phone-icon {
+//      margin-left: 15px;
+//    }
+//  }
+//
+//  .cta {
+//    background: transparent;
+//    a {
+//      color: $white;
+//      background: $secondary;
+//      padding: 6px 24px 8px 24px;
+//      display: inline-block;
+//      transition: 0.3s;
+//      border-radius: 50px;
+//
+//      &:hover {
+//        background:darken($secondary, 6);
+//      }
+//    }
+//  }
+//}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  background: rgba(#000, .1);
+  transition: all 0.5s;
+  z-index: 997;
+  height: 70px;
+  top: 60px;
+
+  &.header-scrolled {
+    background: rgba(darken($primary, 15), .9);
+    top: 0;
+  }
+
+  .logo {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    a {
+      color: #fff;
+    }
+
+    img {
+      max-height: 40px;
+    }
+  }
+
+}
+
+.header-inner-pages {
+  background: rgba(darken($primary, 15), .9) !important;
+}
+
+.topbar-inner-pages {
+  background: rgba(darken($primary, 11), .90) !important;
+}
