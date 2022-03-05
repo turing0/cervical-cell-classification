@@ -368,48 +368,4 @@ def predict(file):
     # print(output_label)
     return output_label, predicted
 
-# def edge():
-#     pass
-#
-#
-# def blend_two_images2():
-#     img1 = Image.open("123.jpg ")
-#     img1 = img1.convert('RGBA')
-#     img2 = Image.open(r"C:\Users\Turing\Desktop\New database pictures\carcinoma_in_situ\149143370-149143378-001.BMP")
-#     img2 = img2.convert('RGBA')
-#     r, g, b, alpha = img2.split()
-#     alpha = alpha.point(lambda i: i > 0 and 204)
-#     img = Image.composite(img2, img1, alpha)
-#     img.show()
-#     img.save("blend2.png")
-#     return
-#
-#
-# img_name = r"C:\Users\Turing\Desktop\New database pictures\carcinoma_in_situ\149143370-149143378-002.bmp"
-#
-# img = Image.open(img_name).convert("L")  # 读图片并转化为灰度图
-#
-# img_array = np.array(img)  # 转化为数组
-#
-# w, h = img_array.shape
-#
-# img_border = np.zeros((w - 1, h - 1))
-#
-# for x in range(1, w - 1):
-#     for y in range(1, h - 1):
-#         Sx = img_array[x + 1][y - 1] + 2 * img_array[x + 1][y] + img_array[x + 1][y + 1] - \
-#              img_array[x - 1][y - 1] - 2 * \
-#              img_array[x - 1][y] - img_array[x - 1][y + 1]
-#         Sy = img_array[x - 1][y + 1] + 2 * img_array[x][y + 1] + img_array[x + 1][y + 1] - \
-#              img_array[x - 1][y - 1] - 2 * \
-#              img_array[x][y - 1] - img_array[x + 1][y - 1]
-#         img_border[x][y] = (Sx * Sx + Sy * Sy) ** 0.5
-#
-# img2 = Image.fromarray(img_border)
-# img2.show()
-# src1 = cv2.imread("img2")
-# src2 = cv2.imread(
-#     r"C:\Users\Turing\Desktop\New database pictures\carcinoma_in_situ\149143370-149143378-002.BMP")
-# result = cv2.addWeighted(src1, 0.8, src2, 0.2, 10)
-# cv2.imshow("result", result)
-# cv2.waitKey(0)
+

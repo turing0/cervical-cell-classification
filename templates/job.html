@@ -103,95 +103,185 @@
                 任务 ID：{{ id }}<br>
                 任务状态：{{ status }}<br>
 
-            <div class="card" style="width: 45%;">
-            <div>
-                <div style="float:left;width: 50%;text-align: center;">
-                    <span style="display: block;">原图</span>
-                  <img class="img-thumbnail" src="/media/{{ img }}" style="width: 50px;" alt="Card image cap">
-                </div>
-                <div style="float:left;width: 50%;text-align: center;">
-                    <span style="display: block;">分割结果图</span>
-                  <img class="img-thumbnail" src="/media/{{ img }}" style="width: 50px;" alt="Card image cap">
-                </div>
-            </div>
-              <div class="card-body">
-{#                  <div style="display: inline-block;margin-right: 50px;">#}
-{#                    </div>#}
 
-                <div style="width: 100%;text-align: center;margin: 0 auto;display: inline-block;vertical-align:top;">
-                    <p class="card-text">类别：{{ predicted }}</p>
-                    <h4 align="center">形态特征</h4>
-                    <table class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">核周长</th>
-                          <th scope="col">核面积</th>
-                          <th scope="col">细胞面积</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td>{{ nuclear_area }} PX</td>
-                          <td>{{ cell_area }} PX</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <h4 align="center" style="margin: 0 auto;">颜色特征</h4>
-                    <div>
-                        <table class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col" colspan="3">均值</th>
-                          <th scope="col" colspan="3">方差</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>R</td>
-                          <td>G</td>
-                          <td>B</td>
-                          <td>R</td>
-                          <td>G</td>
-                          <td>B</td>
-                        </tr>
-                      <tr>
-                          <td>{{ R_mean }}</td>
-                          <td>{{ G_mean }}</td>
-                          <td>{{ B_mean }}</td>
-                          <td>{{ R_variance }}</td>
-                          <td>{{ G_variance }}</td>
-                          <td>{{ B_variance }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+            <div class="card" style="width: 80%;margin: 5px auto; ">
+                <div style="width: 70%;margin: 0 auto;">
+                    <br>
+                    <div style="display: inline-block;margin-right: 50px;">
+                        <span style="display: block">原图</span>
+                        <img src="/media/{{ img }}" class="img-thumbnail">
+                        <br>
+                        <br>
+                        <span style="display: block">分割结果图</span>
+                        <img src="/media/{{ img }}" class="img-thumbnail">
+                        <br><br>
+                        <span>类别：</span> <br>
+                        <span>{{ predicted }}</span>
+                        <br>
                     </div>
 
-                <h4 align="center">纹理特征</h4>
-                    <table class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">能量</th>
-                          <th scope="col">角二阶矩 / 能量</th>
-                          <th scope="col">对比度</th>
-                          <th scope="col">自相关性</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{{ energy }}</td>
-                          <td>{{ asm }}</td>
-                          <td>{{ contrast }}</td>
-                          <td>{{ correlation }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div style="width: 70%;text-align: center;margin: 0 auto;display: inline-block;vertical-align:top;">
+                        <h4 align="center">形态特征</h4>
+                        <table class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">核周长</th>
+                              <th scope="col">核面积</th>
+                              <th scope="col">细胞面积</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td></td>
+                              <td>{{ nuclear_area }} PX</td>
+                              <td>{{ cell_area }} PX</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <h4 align="center">颜色特征</h4>
+                        <table class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col" colspan="3">均值</th>
+                              <th scope="col" colspan="3">方差</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>R</td>
+                              <td>G</td>
+                              <td>B</td>
+                              <td>R</td>
+                              <td>G</td>
+                              <td>B</td>
+                            </tr>
+                          <tr>
+                              <td>{{ R_mean }}</td>
+                              <td>{{ G_mean }}</td>
+                              <td>{{ B_mean }}</td>
+                              <td>{{ R_variance }}</td>
+                              <td>{{ G_variance }}</td>
+                              <td>{{ B_variance }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                    <h4 align="center">纹理特征</h4>
+                        <table class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">能量</th>
+                              <th scope="col">角二阶矩 / 能量</th>
+                              <th scope="col">对比度</th>
+                              <th scope="col">自相关性</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{ energy }}</td>
+                              <td>{{ asm }}</td>
+                              <td>{{ contrast }}</td>
+                              <td>{{ correlation }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
                 </div>
-              </div>
+
+
+
+
+{#            <div>#}
+{#                <div style="float:left;width: 50%;text-align: center;">#}
+{#                    <span style="display: block;">原图</span>#}
+{#                  <img class="img-thumbnail" src="/media/{{ img }}" style="width: 50px;" alt="Card image cap">#}
+{#                </div>#}
+{#                <div style="float:left;width: 50%;text-align: center;">#}
+{#                    <span style="display: block;">分割结果图</span>#}
+{#                  <img class="img-thumbnail" src="/media/{{ img }}" style="width: 50px;" alt="Card image cap">#}
+{#                </div>#}
+{#            </div>#}
+{#              <div class="card-body">#}
+{#                  <div style="display: inline-block;margin-right: 50px;">#}
+{#                    </div>#}
+{##}
+{#                <div style="width: 100%;text-align: center;margin: 0 auto;display: inline-block;vertical-align:top;">#}
+{#                    <p class="card-text">类别：{{ predicted }}</p>#}
+{#                    <h4 align="center">形态特征</h4>#}
+{#                    <table class="table table-bordered table-hover">#}
+{#                      <thead>#}
+{#                        <tr>#}
+{#                          <th scope="col">核周长</th>#}
+{#                          <th scope="col">核面积</th>#}
+{#                          <th scope="col">细胞面积</th>#}
+{#                        </tr>#}
+{#                      </thead>#}
+{#                      <tbody>#}
+{#                        <tr>#}
+{#                          <td></td>#}
+{#                          <td>{{ nuclear_area }} PX</td>#}
+{#                          <td>{{ cell_area }} PX</td>#}
+{#                        </tr>#}
+{#                      </tbody>#}
+{#                    </table>#}
+{##}
+{#                    <h4 align="center" style="margin: 0 auto;">颜色特征</h4>#}
+{#                    <div>#}
+{#                        <table class="table table-bordered table-hover">#}
+{#                      <thead>#}
+{#                        <tr>#}
+{#                          <th scope="col" colspan="3">均值</th>#}
+{#                          <th scope="col" colspan="3">方差</th>#}
+{#                        </tr>#}
+{#                      </thead>#}
+{#                      <tbody>#}
+{#                        <tr>#}
+{#                          <td>R</td>#}
+{#                          <td>G</td>#}
+{#                          <td>B</td>#}
+{#                          <td>R</td>#}
+{#                          <td>G</td>#}
+{#                          <td>B</td>#}
+{#                        </tr>#}
+{#                      <tr>#}
+{#                          <td>{{ R_mean }}</td>#}
+{#                          <td>{{ G_mean }}</td>#}
+{#                          <td>{{ B_mean }}</td>#}
+{#                          <td>{{ R_variance }}</td>#}
+{#                          <td>{{ G_variance }}</td>#}
+{#                          <td>{{ B_variance }}</td>#}
+{#                        </tr>#}
+{#                      </tbody>#}
+{#                    </table>#}
+{#                    </div>#}
+{##}
+{#                <h4 align="center">纹理特征</h4>#}
+{#                    <table class="table table-bordered table-hover">#}
+{#                      <thead>#}
+{#                        <tr>#}
+{#                          <th scope="col">能量</th>#}
+{#                          <th scope="col">角二阶矩 / 能量</th>#}
+{#                          <th scope="col">对比度</th>#}
+{#                          <th scope="col">自相关性</th>#}
+{#                        </tr>#}
+{#                      </thead>#}
+{#                      <tbody>#}
+{#                        <tr>#}
+{#                          <td>{{ energy }}</td>#}
+{#                          <td>{{ asm }}</td>#}
+{#                          <td>{{ contrast }}</td>#}
+{#                          <td>{{ correlation }}</td>#}
+{#                        </tr>#}
+{#                      </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#              </div>#}
+
             </div>
 
-                {{ result }}
+{#                {{ result }}#}
+                <br>
             {% else %}
 
             {% endif %}
