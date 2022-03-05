@@ -31,6 +31,8 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">#}
+
 
 </head>
 
@@ -81,14 +83,125 @@
       <div class="container" data-aos="fade-up">
 
         <div class="row">
-
-
-
-
+         <form method="POST" action="{% url 'job' %}">
+            {% csrf_token %}
+              <div class="form-group" style="margin-bottom: 10px;">
+                <h4 for="id" style="margin-top: -10px;">任务 ID</h4>
+                <input type="search" id="id" name="id" class="form-control" placeholder="请输入任务 ID">
+              </div>
+              <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+            <br>
+            <br>
         </div>
 
       </div>
+
+    <div class="container" data-aos="fade-up">
+          <div style="margin: 20px 0px;">
+            {% if id %}
+                任务 ID：{{ id }}<br>
+                任务状态：{{ status }}<br>
+
+            <div class="card" style="width: 45%;">
+            <div>
+                <div style="float:left;width: 50%;text-align: center;">
+                    <span style="display: block;">原图</span>
+                  <img class="img-thumbnail" src="/media/{{ img }}" style="width: 50px;" alt="Card image cap">
+                </div>
+                <div style="float:left;width: 50%;text-align: center;">
+                    <span style="display: block;">分割结果图</span>
+                  <img class="img-thumbnail" src="/media/{{ img }}" style="width: 50px;" alt="Card image cap">
+                </div>
+            </div>
+              <div class="card-body">
+{#                  <div style="display: inline-block;margin-right: 50px;">#}
+{#                    </div>#}
+
+                <div style="width: 100%;text-align: center;margin: 0 auto;display: inline-block;vertical-align:top;">
+                    <p class="card-text">类别：{{ predicted }}</p>
+                    <h4 align="center">形态特征</h4>
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">核周长</th>
+                          <th scope="col">核面积</th>
+                          <th scope="col">细胞面积</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td>{{ nuclear_area }} PX</td>
+                          <td>{{ cell_area }} PX</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <h4 align="center" style="margin: 0 auto;">颜色特征</h4>
+                    <div>
+                        <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col" colspan="3">均值</th>
+                          <th scope="col" colspan="3">方差</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>R</td>
+                          <td>G</td>
+                          <td>B</td>
+                          <td>R</td>
+                          <td>G</td>
+                          <td>B</td>
+                        </tr>
+                      <tr>
+                          <td>{{ R_mean }}</td>
+                          <td>{{ G_mean }}</td>
+                          <td>{{ B_mean }}</td>
+                          <td>{{ R_variance }}</td>
+                          <td>{{ G_variance }}</td>
+                          <td>{{ B_variance }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+
+                <h4 align="center">纹理特征</h4>
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">能量</th>
+                          <th scope="col">角二阶矩 / 能量</th>
+                          <th scope="col">对比度</th>
+                          <th scope="col">自相关性</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ energy }}</td>
+                          <td>{{ asm }}</td>
+                          <td>{{ contrast }}</td>
+                          <td>{{ correlation }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+
+                {{ result }}
+            {% else %}
+
+            {% endif %}
+          </div>
+
+
+      </div>
+
     </section><!-- End Blog Section -->
+
 
   </main><!-- End #main -->
 

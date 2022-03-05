@@ -118,6 +118,7 @@
                     <br>
                     <span>类别：</span> <br>
                     <span>{{ predicted }}</span>
+                    <br>
 {#                {{ cell_nucleus }}#}
                 </div>
 
@@ -192,6 +193,23 @@
                 <br>
                 <br>
             {% endif %}
+    <div style="text-align: center;">
+
+        {% if result.task_id %}
+            <span>您的任务 ID：</span>
+            <form name='form1' action='{% url 'job' %}' method='post'>
+                {% csrf_token %}
+              <input type='text' name='id' hidden value={{ result.task_id }} >  <br>
+                <a href='javascript:document.form1.submit();'>{{ result.task_id }}</a>
+            </form>
+            <br>
+            <span>点击任务 ID 前往查询任务状态</span>
+            {% else %}
+
+            {% endif %}
+
+
+    </div>
 
     </div>
         <br>

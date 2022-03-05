@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web.apps.WebConfig',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,16 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media').replace("\\", "/")
 MEDIA_URL = '/media/'
+
+
+# CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+# # celery时区设置
+# CELERY_TIMEZONE = TIME_ZONE
+# # 任务结果过期时间，秒
+# CELERY_TASK_RESULT_EXPIRES = 3600
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
