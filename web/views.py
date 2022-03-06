@@ -94,3 +94,6 @@ def index(request):
 
 def job(request):
     return render(request, 'job.html', locals())
+
+def blog_single(request):
+    return render(request, 'blog_single.html')

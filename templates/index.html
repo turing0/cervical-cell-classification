@@ -257,7 +257,7 @@
           <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch" data-aos="fade-left">
 
             <div class="content">
-              <h3>在宫颈细胞学筛查领域</h3>
+              <h3>计算机视觉识别癌细胞</h3>
               <p>
                   主要具有以下<strong>四个客观难点<strong>
               </p>
@@ -703,10 +703,7 @@
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">分类性能度量指标? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
                 <p>
-                    TP（True Positive）表示被正确分类为正例的个数，即实际类别为正例并且被分类为正例的个数 <br>
-                    FP（False Positive）表示被错误分类为正例的个数，即实际类别为负例但是被分类为正例的个数 <br>
-                    FN（False Negative）表示被错误分类为负例的个数，即实际类别为正例但是被分类为负例的个数 <br>
-                    TN（True Negative）表示被正确分类为负例的个数，即实际类别为负例并且被分类为负例的个数 <br>
+                    分类评价指标有准确率（accuracy）、精确率（precision）、召回率（recall）、AUC面积、F值等。本系统使用ACC以及AUC。准确率Accuracy也称精度, 分类准确的样本数占该类样本总数的比例。AUC是衡量二分类模型优劣的一种评价指标，表示正例的预测值比负例预测值大的概率。 <br>
                 </p>
               </div>
             </li>
@@ -715,7 +712,7 @@
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">如何对分类结果进行评析? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
                 <p>
-                    采用混淆矩阵和以下三个度量参数:准确率、灵敏度、特异度进行结果评估
+                    采用混淆矩阵得出以下三个度量参数:准确率、灵敏度、特异度进行结果评估
                 </p>
               </div>
             </li>
