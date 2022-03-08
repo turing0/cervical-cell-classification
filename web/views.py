@@ -126,3 +126,7 @@ from django.http import HttpResponse
 def test_celery(request):
     id = add.delay(3, 5)
     return HttpResponse(f"Celery works, id: {id}")
+    return render(request, 'job.html', locals())
+
+def blog_single(request):
+    return render(request, 'blog_single.html')
