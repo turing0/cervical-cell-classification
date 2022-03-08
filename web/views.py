@@ -102,23 +102,24 @@ def job(request):
     from celery.result import AsyncResult
     if request.method == 'POST':
         id = request.POST.get('id').strip()
-        status = AsyncResult(id).status
-        result = AsyncResult(id).result
-        img = result['origin_image']
-        predicted = result['predicted']
-        nuclear_area = result['shape_features'][0]
-        cell_area = result['shape_features'][1]
-        R_mean = result['color_features'][0]
-        G_mean = result['color_features'][1]
-        B_mean = result['color_features'][2]
-        R_variance = result['color_features'][3]
-        G_variance = result['color_features'][4]
-        B_variance = result['color_features'][5]
-        energy = result['texture_features'][0]
-        asm = result['texture_features'][1]
-        contrast = result['texture_features'][2]
-        correlation = result['texture_features'][3]
-        return render(request, 'job.html', locals())
+        if id:
+            status = AsyncResult(id).status
+            result = AsyncResult(id).result
+            img = result['origin_image']
+            predicted = result['predicted']
+            nuclear_area = result['shape_features'][0]
+            cell_area = result['shape_features'][1]
+            R_mean = result['color_features'][0]
+            G_mean = result['color_features'][1]
+            B_mean = result['color_features'][2]
+            R_variance = result['color_features'][3]
+            G_variance = result['color_features'][4]
+            B_variance = result['color_features'][5]
+            energy = result['texture_features'][0]
+            asm = result['texture_features'][1]
+            contrast = result['texture_features'][2]
+            correlation = result['texture_features'][3]
+            return render(request, 'job.html', locals())
     return render(request, 'job.html', locals())
 
 

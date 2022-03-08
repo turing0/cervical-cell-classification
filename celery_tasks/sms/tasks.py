@@ -65,7 +65,7 @@ def predict_churn_single(self, file, user_headimg_path, user_headimg):
         'texture_features': [energy, contrast, asm, correlation],
     }
 
-    print('------', output_label, predicted)
+    print('------', predicted)
     return datas
 
 
