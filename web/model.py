@@ -3,10 +3,10 @@ import torch.nn as nn
 from torch.utils.data import Dataset
 from torchvision import transforms
 from torchvision.transforms.functional import to_tensor, to_pil_image
-import numpy as np
 from PIL import Image
+from .functions import tensor_to_image
+import cv2
 import matplotlib.pyplot as plt
-from decimal import Decimal
 from skimage import metrics, measure
 # from skimage.measure import compare_ssim, compare_psnr
 import cv2
@@ -228,9 +228,14 @@ class ChurnModel:
         imgs = imgs.cuda()
         output_label, output_gt, output_img = self.model(imgs.unsqueeze(0))
         pil_img = to_pil_image(output_img[0])
-        plt.subplot(1, 2, 1)
-        plt.imshow(pil_img)
+        # plt.subplot(1, 2, 1)
+        # plt.imshow(pil_img)
         pil_img.save('output_images/' + 'output_img.jpg')
+        print('shape:', output_gt.shape, output_img.shape)
+        gt_img = to_pil_image(output_gt)
+        # gt_image = tensor_to_image(output_gt)
+
+        # gt_image.save('output_images/' + 'gt_image.jpg')
 
         _, predicted = torch.max(output_label, 1)
         return output_label, predicted
