@@ -232,7 +232,7 @@ class ChurnModel:
         # plt.imshow(pil_img)
         pil_img.save('output_images/' + 'output_img.jpg')
         print('shape:', output_gt.shape, output_img.shape)
-        gt_img = to_pil_image(output_gt)
+        # gt_img = to_pil_image(output_gt)
         # gt_image = tensor_to_image(output_gt)
 
         # gt_image.save('output_images/' + 'gt_image.jpg')
