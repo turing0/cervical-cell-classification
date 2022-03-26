@@ -51,14 +51,15 @@ class PredictTask(Task):
           path=('web.model', 'ChurnModel'),
           name='{}.{}'.format(__name__, 'Churn'))
 def predict_churn_single(self, file, user_headimg_path, user_headimg):
-    output_label, predicted = self.model.predict(file)
+    output_label, predicted, segmentation_image = self.model.predict(file, user_headimg)
     predicted = res[str(predicted)[8]]
-
+    print('user_headimg: ', user_headimg)
     nuclear_area, cell_area = compute_shape_features('output_images/' + 'output_img.jpg')
     R_mean, G_mean, B_mean, R_variance, G_variance, B_variance = compute_color_features(user_headimg_path)
     energy, contrast, asm, correlation = compute_texture_features(user_headimg_path)
     datas = {
         'origin_image': user_headimg,
+        'segmentation_image': segmentation_image,
         'predicted': predicted,
         'shape_features': [nuclear_area, cell_area],
         'color_features': [R_mean, G_mean, B_mean, R_variance, G_variance, B_variance],

@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
+import numpy as np
 from torchvision import transforms
 from torchvision.transforms.functional import to_tensor, to_pil_image
 from PIL import Image
@@ -8,10 +9,9 @@ from .functions import tensor_to_image
 import cv2
 import matplotlib.pyplot as plt
 from skimage import metrics, measure
-# from skimage.measure import compare_ssim, compare_psnr
 import cv2
 from skimage.feature import greycomatrix, greycoprops
-from skimage import io, color, img_as_ubyte
+from .models import User
 
 
 class ImageDataset(Dataset):
@@ -218,7 +218,7 @@ class ChurnModel:
         self.model.load_state_dict(torch.load('web/net.pth'))
         self.model.eval()
 
-    def predict(self, file):
+    def predict(self, file, user_headimg):
         image_path_list = []
         image_path_list.append(file)
         dataset = ImageDataset(image_path_list)
@@ -231,11 +231,43 @@ class ChurnModel:
         # plt.subplot(1, 2, 1)
         # plt.imshow(pil_img)
         pil_img.save('output_images/' + 'output_img.jpg')
-        print('shape:', output_gt.shape, output_img.shape)
+
+        # img = Image.open('output_images/' + 'output_img.jpg').convert("L")  # 读图片并转化为灰度图
+        img = pil_img.convert("L")  # 读图片并转化为灰度图
+        img_array = np.array(img)  # 转化为数组
+        w, h = img_array.shape
+        img_border = np.zeros((w - 1, h - 1))
+        for x in range(1, w - 1):
+            for y in range(1, h - 1):
+                Sx = img_array[x + 1][y - 1] + 2 * img_array[x + 1][y] + img_array[x + 1][y + 1] - \
+                     img_array[x - 1][y - 1] - 2 * \
+                     img_array[x - 1][y] - img_array[x - 1][y + 1]
+                Sy = img_array[x - 1][y + 1] + 2 * img_array[x][y + 1] + img_array[x + 1][y + 1] - \
+                     img_array[x - 1][y - 1] - 2 * \
+                     img_array[x][y - 1] - img_array[x + 1][y - 1]
+                img_border[x][y] = (Sx * Sx + Sy * Sy) ** 0.5
+
+        img2 = Image.fromarray(img_border)
+        # img2.show()
+        if img2.mode != 'RGB':
+            img2 = img2.convert('RGB')
+            # img2.save('output_images/' + 'segmentation_result.jpg')
+            segmentation_img_name = str(user_headimg).replace('.BMP', '_segmentation_img.jpg')   #   img/xxxxxxxx.BMP
+            img2.save('media/' + segmentation_img_name)
+
+            # segmentation_img = User.objects.create(headimg='output_images/' + 'segmentation_result.jpg')
+            # user = User(headimg='output_images/' + 'segmentation_result.jpg')
+            # segmentation_img.save()
+
+            # print('------segmentation_result---------')
+            # print('segmentation_result: ', segmentation_img.headimg)
+
+
+        # print('shape:', output_gt.shape, output_img.shape)
         # gt_img = to_pil_image(output_gt)
         # gt_image = tensor_to_image(output_gt)
 
         # gt_image.save('output_images/' + 'gt_image.jpg')
 
         _, predicted = torch.max(output_label, 1)
-        return output_label, predicted
+        return output_label, predicted, segmentation_img_name

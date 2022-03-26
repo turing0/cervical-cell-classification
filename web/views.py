@@ -12,8 +12,6 @@ from celery_tasks.sms.tasks import add
 from celery_tasks.sms.tasks import pred
 from celery_tasks.sms.tasks import predict_churn_single
 from .functions import predict
-import os
-
 res = {
     '0': '原位癌细胞',
     '1': '重度鳞状异常细胞',
@@ -106,7 +104,8 @@ def job(request):
         if id:
             status = AsyncResult(id).status
             result = AsyncResult(id).result
-            img = result['origin_image']
+            origin_image = result['origin_image']
+            segmentation_image = result['segmentation_image']
             predicted = result['predicted']
             nuclear_area = result['shape_features'][0]
             cell_area = result['shape_features'][1]
