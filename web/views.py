@@ -3,6 +3,7 @@ from web import models
 from cervical_cell_classification import settings
 from .myforms import UploadFileForm
 from .models import User
+from django.http import HttpResponse
 from .functions import compute_shape_features
 from .functions import compute_color_features
 from .functions import compute_texture_features
@@ -123,10 +124,10 @@ def job(request):
     return render(request, 'job.html', locals())
 
 
-from django.http import HttpResponse
 def test_celery(request):
     id = add.delay(3, 5)
     return HttpResponse(f"Celery works, id: {id}")
+
 
 def blog_single(request):
     return render(request, 'blog_single.html', locals())
