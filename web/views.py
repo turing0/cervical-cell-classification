@@ -129,5 +129,5 @@ def test_celery(request):
     return HttpResponse(f"Celery works, id: {id}")
 
 
-def blog_single(request):
-    return render(request, 'blog_single.html', locals())
+def details(request):
+    return render(request, 'details.html', locals())

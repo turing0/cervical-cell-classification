@@ -8,7 +8,7 @@ urlpatterns = [
     path(r'tutorial/', views.tutorial, name='tutorial'),
     path(r'job/', views.job, name='job'),
     path(r'test/', views.test_celery, name='test_celery'),
-    path(r'tutorial/blog_single/', views.blog_single, name="blog_single")
+    path(r'tutorial/details/', views.details, name="details")
     # path(r'history/', views.historydata, name='historydata'),
     # path(r'^share$', views.share, name='share'),
     # path('gethtml/', views.gethtml),
