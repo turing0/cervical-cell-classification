@@ -10,8 +10,6 @@ import cv2
 import matplotlib.pyplot as plt
 from skimage import metrics, measure
 import cv2
-from skimage.feature import greycomatrix, greycoprops
-from .models import User
 
 
 class ImageDataset(Dataset):
