@@ -8,9 +8,6 @@ from web.functions import compute_color_features
 from web.functions import compute_texture_features
 import importlib
 
-# @shared_task
-# def add(x, y):
-#     return x + y
 res = {
     '0': '原位癌细胞',
     '1': '重度鳞状异常细胞',
@@ -44,6 +41,7 @@ class PredictTask(Task):
             self.model = model_obj()
             print('Model loaded')
         return self.run(*args, **kwargs)
+
 
 @app.task(ignore_result=False,
           bind=True,
@@ -83,17 +81,5 @@ def pred(path, user_headimg_path):
         'texture_features': [energy, contrast, asm, correlation],
     }
     return outputLabel, predicted, datas
-
-
-@app.task
-def add(x, y):
-    time.sleep(5)
-    print(x + y)
-    res = {
-        '1': [1,2,3],
-        '2': [1,2,3]
-    }
-    return x + y, res
-
 
 
