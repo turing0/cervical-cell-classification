@@ -27,7 +27,25 @@ def system(request):
             # file = time.strftime('%Y%m%d%H%M', time.localtime(time.time())) + '_' + str(request.FILES.get('file'))
             file = request.FILES.get('file')
             # headimg = form.cleaned_data['file']
+            for file in request.FILES.getlist('file'):
 
+                if str(file).find('.BMP') == -1:
+                    print('skip ', file)
+                    continue
+                # print(file)
+                fn = file
+                user = User(headimg=file)
+                user.save()
+                print('---------------')
+                print(user.headimg)
+                print(user.headimg.path)
+                print(settings.MEDIA_ROOT + '/' + str(user.headimg))
+                path = settings.MEDIA_ROOT + '/' + str(user.headimg)
+                # print('------------')
+
+                result = predict_churn_single.apply_async(args=[path, user.headimg.path, str(user.headimg)])
+
+            return render(request, 'system.html', locals())
             if str(file).find('.BMP') == -1:
                 message = '请上传 BMP 文件！'
                 return render(request, 'system.html', locals())
