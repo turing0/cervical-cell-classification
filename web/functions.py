@@ -1,4 +1,3 @@
-from torch.utils.tensorboard import SummaryWriter
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
@@ -9,7 +8,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from decimal import Decimal
 from skimage import metrics, measure
-# from skimage.measure import compare_ssim, compare_psnr
 import cv2
 from skimage.feature import greycomatrix, greycoprops
 from skimage import io, color, img_as_ubyte

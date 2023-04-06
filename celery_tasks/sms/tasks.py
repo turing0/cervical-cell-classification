@@ -43,50 +43,57 @@ class PredictTask(Task):
         return self.run(*args, **kwargs)
 
 
+# @app.task(ignore_result=False,
+#           bind=True,
+#           base=PredictTask,
+#           path=('web.model', 'ChurnModel'),
+#           name='{}.{}'.format(__name__, 'Churn'))
+# def predict_churn_single(self, file, user_headimg_path, user_headimg):
+#     output_label, predicted, segmentation_image = self.model.predict(file, user_headimg)
+#     predicted = res[str(predicted)[8]]
+#     print('user_headimg: ', user_headimg)
+#     nuclear_area, cell_area = compute_shape_features('output_images/' + 'output_img.jpg')
+#     R_mean, G_mean, B_mean, R_variance, G_variance, B_variance = compute_color_features(user_headimg_path)
+#     energy, contrast, asm, correlation = compute_texture_features(user_headimg_path)
+#     datas = {
+#         'origin_image': user_headimg,
+#         'segmentation_image': segmentation_image,
+#         'predicted': predicted,
+#         'shape_features': [nuclear_area, cell_area],
+#         'color_features': [R_mean, G_mean, B_mean, R_variance, G_variance, B_variance],
+#         'texture_features': [energy, contrast, asm, correlation],
+#     }
+#
+#     print('------', predicted)
+#     return datas
+
+
 @app.task(ignore_result=False,
           bind=True,
           base=PredictTask,
           path=('web.model', 'ChurnModel'),
           name='{}.{}'.format(__name__, 'Churn'))
-def predict_churn_single(self, file, user_headimg_path, user_headimg):
-    output_label, predicted, segmentation_image = self.model.predict(file, user_headimg)
-    predicted = res[str(predicted)[8]]
-    print('user_headimg: ', user_headimg)
-    nuclear_area, cell_area = compute_shape_features('output_images/' + 'output_img.jpg')
-    R_mean, G_mean, B_mean, R_variance, G_variance, B_variance = compute_color_features(user_headimg_path)
-    energy, contrast, asm, correlation = compute_texture_features(user_headimg_path)
-    datas = {
-        'origin_image': user_headimg,
-        'segmentation_image': segmentation_image,
-        'predicted': predicted,
-        'shape_features': [nuclear_area, cell_area],
-        'color_features': [R_mean, G_mean, B_mean, R_variance, G_variance, B_variance],
-        'texture_features': [energy, contrast, asm, correlation],
-    }
-
-    print('------', predicted)
-    return datas
-
-
-def predict_churn_multiple(self, file, user_headimg_path, user_headimg):
+def predict_churn_multiple(self, image_list):
     data_list = []
-    data_list.append(predict_churn_single(file, user_headimg_path, user_headimg))
-
+    for idx, images in enumerate(image_list):
+        print('predicting: ', idx)
+        file, user_headimg_path, user_headimg = images
+        output_label, predicted, segmentation_image = self.model.predict(file, user_headimg)
+        predicted = res[str(predicted)[8]]
+        print('user_headimg: ', user_headimg)
+        nuclear_area, cell_area = compute_shape_features('output_images/' + 'output_img.jpg')
+        R_mean, G_mean, B_mean, R_variance, G_variance, B_variance = compute_color_features(user_headimg_path)
+        energy, contrast, asm, correlation = compute_texture_features(user_headimg_path)
+        datas = {
+            'origin_image': user_headimg,
+            'segmentation_image': segmentation_image,
+            'predicted': predicted,
+            'shape_features': [nuclear_area, cell_area],
+            'color_features': [R_mean, G_mean, B_mean, R_variance, G_variance, B_variance],
+            'texture_features': [energy, contrast, asm, correlation],
+        }
+        data_list.append(datas)
+        print('------', predicted)
     return data_list
-
-
-@app.task
-def pred(path, user_headimg_path):
-    outputLabel, predicted = predict(path)
-    predicted = res[str(predicted)[8]]
-    nuclear_area, cell_area = compute_shape_features('output_images/' + 'output_img.jpg')
-    R_mean, G_mean, B_mean, R_variance, G_variance, B_variance = compute_color_features(user_headimg_path)
-    energy, contrast, asm, correlation = compute_texture_features(user_headimg_path)
-    datas = {
-        'shape_features': [nuclear_area, cell_area],
-        'color_features': [R_mean, G_mean, B_mean, R_variance, G_variance, B_variance],
-        'texture_features': [energy, contrast, asm, correlation],
-    }
-    return outputLabel, predicted, datas
 
 

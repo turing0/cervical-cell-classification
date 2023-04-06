@@ -4,8 +4,7 @@ from cervical_cell_classification import settings
 from .myforms import UploadFileForm
 from .models import User
 from django.http import HttpResponse
-from celery_tasks.sms.tasks import pred
-from celery_tasks.sms.tasks import predict_churn_single
+from celery_tasks.sms.tasks import predict_churn_multiple
 from .functions import predict
 
 res = {
@@ -27,6 +26,7 @@ def system(request):
             # file = time.strftime('%Y%m%d%H%M', time.localtime(time.time())) + '_' + str(request.FILES.get('file'))
             file = request.FILES.get('file')
             # headimg = form.cleaned_data['file']
+            image_list = []
             for file in request.FILES.getlist('file'):
 
                 if str(file).find('.BMP') == -1:
@@ -42,36 +42,10 @@ def system(request):
                 print(settings.MEDIA_ROOT + '/' + str(user.headimg))
                 path = settings.MEDIA_ROOT + '/' + str(user.headimg)
                 # print('------------')
+                image_list.append([path, user.headimg.path, str(user.headimg)])
 
-                result = predict_churn_single.apply_async(args=[path, user.headimg.path, str(user.headimg)])
-
-            return render(request, 'system.html', locals())
-            if str(file).find('.BMP') == -1:
-                message = '请上传 BMP 文件！'
-                return render(request, 'system.html', locals())
-            fn = request.FILES['file']
-            user = User(headimg=file)
-            user.save()
-
-            print('---------------')
-            print(user.headimg)
-            # datalist = handle_uploaded_file(request.FILES['file'],filename=request.FILES.get('file'))
-            # message = 'Done! 已处理 '
-            # valueList = datalist[1::2]
-            # tlist = apriorirules(safe_path)
-            # reslist = tlist[0]
-            # xlist = tlist[1]
-
-            path = settings.MEDIA_ROOT + '/' + str(user.headimg)
-            # print(path)
-
-            # result = add.apply_async(args=[3, 5])
-            #
-            # outputLabel, predicted = predict(path)
-            # outputLabel, predicted, datas = pred(path, user.headimg.path)
-
-            # result = pred.apply_async(args=[path, user.headimg.path])
-            result = predict_churn_single.apply_async(args=[path, user.headimg.path, str(user.headimg)])
+            # result = predict_churn_single.apply_async(args=[path, user.headimg.path, str(user.headimg)])
+            result = predict_churn_multiple.apply_async(args=[image_list])
 
             return render(request, 'system.html', locals())
     else:
@@ -101,23 +75,31 @@ def job(request):
     if request.method == 'POST':
         id = request.POST.get('id').strip()
         if id:
+            return_list = []
+
             status = AsyncResult(id).status
-            result = AsyncResult(id).result
-            origin_image = result['origin_image']
-            segmentation_image = result['segmentation_image']
-            predicted = result['predicted']
-            nuclear_area = result['shape_features'][0]
-            cell_area = result['shape_features'][1]
-            R_mean = result['color_features'][0]
-            G_mean = result['color_features'][1]
-            B_mean = result['color_features'][2]
-            R_variance = result['color_features'][3]
-            G_variance = result['color_features'][4]
-            B_variance = result['color_features'][5]
-            energy = result['texture_features'][0]
-            asm = result['texture_features'][1]
-            contrast = result['texture_features'][2]
-            correlation = result['texture_features'][3]
+            result_list = AsyncResult(id).result
+
+            for i, result in enumerate(result_list):
+                temp_dict = dict()
+                temp_dict['origin_image'] = result['origin_image']
+                temp_dict['segmentation_image'] = result['segmentation_image']
+                temp_dict['predicted'] = result['predicted']
+                temp_dict['nuclear_area'] = result['shape_features'][0]
+                temp_dict['cell_area'] = result['shape_features'][1]
+                temp_dict['R_mean'] = result['color_features'][0]
+                temp_dict['G_mean'] = result['color_features'][1]
+                temp_dict['B_mean'] = result['color_features'][2]
+                temp_dict['R_variance'] = result['color_features'][3]
+                temp_dict['G_variance'] = result['color_features'][4]
+                temp_dict['B_variance'] = result['color_features'][5]
+                temp_dict['energy'] = result['texture_features'][0]
+                temp_dict['asm'] = result['texture_features'][1]
+                temp_dict['contrast'] = result['texture_features'][2]
+                temp_dict['correlation'] = result['texture_features'][3]
+                temp_dict['idx'] = i + 1
+                return_list.append(temp_dict)
+            counts = len(return_list)
             return render(request, 'job.html', locals())
     return render(request, 'job.html', locals())
 
