@@ -139,7 +139,8 @@
             </g>
             </svg>
                   <input type="file" name="files[]" id="file" class="box-file" data-multiple-caption="{count} files selected" multiple="">
-                  <label for="file" id="showlabel"><strong>Choose a file</strong><span class="box-dragndrop"> or drag it here</span>.</label>
+{#                  <label for="file" id="showlabel"><strong>Choose images</strong><span class="box-dragndrop"> or <strong>drag</strong> it here</span>.</label>#}
+                  <label for="file" id="showlabel"><strong>选择图片</strong><span class="box-dragndrop"> 或 <strong>拖拽</strong> 到这里</span></label>
                 <div style="width: 20%; margin: 0 auto;">
                     <label for="id_file" id="uploadLabel" onclick="changeImg()">选择图片继续</label>
                     <label for="id_file" id="uploadLabel" onclick="changeFolder()">选择文件夹继续</label>
@@ -261,6 +262,7 @@
       <div style="text-align: center;">
 
         {% if result.task_id %}
+            <br>
             <span>您的任务 ID：</span>
             <form name='form1' action='{% url 'job' %}' method='post'>
                 {% csrf_token %}

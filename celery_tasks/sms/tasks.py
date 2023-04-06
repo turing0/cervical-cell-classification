@@ -68,6 +68,13 @@ def predict_churn_single(self, file, user_headimg_path, user_headimg):
     return datas
 
 
+def predict_churn_multiple(self, file, user_headimg_path, user_headimg):
+    data_list = []
+    data_list.append(predict_churn_single(file, user_headimg_path, user_headimg))
+
+    return data_list
+
+
 @app.task
 def pred(path, user_headimg_path):
     outputLabel, predicted = predict(path)
