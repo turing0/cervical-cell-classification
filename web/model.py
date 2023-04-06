@@ -211,7 +211,7 @@ class ChurnModel:
         self.model.load_state_dict(torch.load('web/net.pth'))
         self.model.eval()
 
-    def predict(self, file, user_headimg):
+    def predict(self, file, relative_path):
         image_path_list = []
         image_path_list.append(file)
         dataset = ImageDataset(image_path_list)
@@ -245,7 +245,7 @@ class ChurnModel:
         if img2.mode != 'RGB':
             img2 = img2.convert('RGB')
             # img2.save('output_images/' + 'segmentation_result.jpg')
-            segmentation_img_name = str(user_headimg).replace('.BMP', '_segmentation_img.jpg')   #   img/xxxxxxxx.BMP
+            segmentation_img_name = str(relative_path).replace('.BMP', '_segmentation_img.jpg')   #   img/xxxxxxxx.BMP
             img2.save('media/' + segmentation_img_name)
 
             # segmentation_img = User.objects.create(headimg='output_images/' + 'segmentation_result.jpg')

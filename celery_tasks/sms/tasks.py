@@ -77,15 +77,15 @@ def predict_churn_multiple(self, image_list):
     data_list = []
     for idx, images in enumerate(image_list):
         print('predicting: ', idx)
-        file, user_headimg_path, user_headimg = images
-        output_label, predicted, segmentation_image = self.model.predict(file, user_headimg)
+        user_headimg_path, relative_path = images
+        output_label, predicted, segmentation_image = self.model.predict(user_headimg_path, relative_path)
         predicted = res[str(predicted)[8]]
-        print('user_headimg: ', user_headimg)
+        print('user_headimg: ', relative_path)
         nuclear_area, cell_area = compute_shape_features('output_images/' + 'output_img.jpg')
         R_mean, G_mean, B_mean, R_variance, G_variance, B_variance = compute_color_features(user_headimg_path)
         energy, contrast, asm, correlation = compute_texture_features(user_headimg_path)
         datas = {
-            'origin_image': user_headimg,
+            'origin_image': relative_path,
             'segmentation_image': segmentation_image,
             'predicted': predicted,
             'shape_features': [nuclear_area, cell_area],

@@ -39,10 +39,7 @@ def system(request):
                 print('---------------')
                 print(user.headimg)
                 print(user.headimg.path)
-                print(settings.MEDIA_ROOT + '/' + str(user.headimg))
-                path = settings.MEDIA_ROOT + '/' + str(user.headimg)
-                # print('------------')
-                image_list.append([path, user.headimg.path, str(user.headimg)])
+                image_list.append([user.headimg.path, str(user.headimg)])
 
             # result = predict_churn_single.apply_async(args=[path, user.headimg.path, str(user.headimg)])
             result = predict_churn_multiple.apply_async(args=[image_list])
