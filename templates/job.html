@@ -92,10 +92,10 @@
               <button type="submit" class="btn btn-primary">搜索</button>
 
             </form>
-            <br>
-            <br>
 
 {#            {{ jobId_list }}#}
+        {% if jobId_list %}
+          <!-- jobId_list存在时渲染的HTML代码 -->
             <div style="width: 100%">
                 <br>
                 <h4>历史任务 ID</h4>
@@ -110,6 +110,10 @@
                   {% endfor %}
                 </div>
             </div>
+        {% else %}
+          <!-- jobId_list不存在时渲染的HTML代码 -->
+        {% endif %}
+
         </div>
 
       </div>
@@ -137,7 +141,7 @@
     </script>
 <br>
     <div class="container" data-aos="fade-up">
-          <div style="margin: 20px 0px;">
+          <div style="margin: 10px 0px;">
             {% if id %}
                 任务 ID：{{ id }}<br>
                 任务状态：{{ status }}<br><br>
