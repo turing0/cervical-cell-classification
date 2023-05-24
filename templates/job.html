@@ -94,9 +94,47 @@
             </form>
             <br>
             <br>
+
+{#            {{ jobId_list }}#}
+            <div style="width: 100%">
+                <br>
+                <h4>历史任务 ID</h4>
+                <div class="list-group">
+                  {% for job in jobId_list %}
+                    <a href="#" class="list-group-item list-group-item-action job-link">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ job.0 }}</h5>  <!-- job ID -->
+                        <small>{{ job.1 }}</small>  <!-- 创建时间 -->
+                      </div>
+                    </a>
+                  {% endfor %}
+                </div>
+            </div>
         </div>
 
       </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // 获取所有具有 'job-link' 类名的元素
+        const jobLinks = document.querySelectorAll('.job-link');
+
+        const inputElement = document.getElementById('id');
+
+        // 为每个 'job-link' 元素添加点击事件
+        jobLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                // 阻止默认行为，以免在点击时触发链接
+                event.preventDefault();
+
+                // 从点击的元素中获取任务 ID
+                const jobId = event.currentTarget.querySelector('h5.mb-1').textContent;
+
+                // 更新 文本内容
+                inputElement.value = jobId;
+            });
+        });
+    });
+    </script>
 <br>
     <div class="container" data-aos="fade-up">
           <div style="margin: 20px 0px;">

@@ -66,6 +66,7 @@ def data(request):
 def index(request):
     return render(request, 'index.html', locals())
 
+from django_celery_results.models import TaskResult
 
 def job(request):
     from celery.result import AsyncResult
@@ -98,6 +99,11 @@ def job(request):
                 return_list.append(temp_dict)
             counts = len(return_list)
             return render(request, 'job.html', locals())
+    else:
+        results = TaskResult.objects.all()
+        task_results_list = list(results.values())  # 将QuerySet转换为列表
+        print(task_results_list)
+        jobId_list = [{0:item['task_id'], 1:item['date_created']} for item in task_results_list]
     return render(request, 'job.html', locals())
 
 
