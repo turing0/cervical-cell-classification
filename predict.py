@@ -1,19 +1,15 @@
 import torchvision
 from sklearn.metrics import confusion_matrix
-from torch.utils.tensorboard import SummaryWriter
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
 from torchvision.transforms.functional import to_tensor, to_pil_image
 import numpy as np
 import pandas as pd
-import sys
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
 import os
 from skimage import metrics, measure
-# from skimage.measure import compare_ssim, compare_psnr
 import cv2
 
 
@@ -227,7 +223,7 @@ imgs = imgs.cuda()
 output_label, output_gt, output_img = net(imgs.unsqueeze(0))
 pil_img = to_pil_image(output_img[0])
 plt.subplot(1, 2, 1)
-plt.imshow(pil_img,cmap='gray')
+plt.imshow(pil_img, cmap='gray')
 pil_img.save('c.jpg')
 # img = cv2.imread("D:/lion.jpg", 0)
 # img = cv2.GaussianBlur(pil_img, (3, 3), 0)
@@ -248,5 +244,5 @@ cv2.drawContours(img, contours, -1, (0, 255, 0), 3)
 
 # edges = cv2.Canny(img, 30, 100)
 plt.subplot(1, 2, 2)
-plt.imshow(uimg,cmap='gray')
+plt.imshow(uimg, cmap='gray')
 plt.show()

@@ -1,7 +1,6 @@
 from celery_tasks.main import app
 from celery import Task
 from celery import shared_task
-import time
 from web.functions import predict
 from web.functions import compute_shape_features
 from web.functions import compute_color_features

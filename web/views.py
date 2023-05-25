@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from web import models
-from cervical_cell_classification import settings
 from .myforms import UploadFileForm
 from .models import User
-from django.http import HttpResponse
 from celery_tasks.sms.tasks import predict_churn_multiple
 from .functions import predict
 
